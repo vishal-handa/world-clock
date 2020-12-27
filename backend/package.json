@@ -1,14 +1,12 @@
 {
-  "name": "node-wksp-1",
-  "version": "0.5.0",
-  "description": "This is our first Node Workshop!",
+  "name": "world-clock",
+  "description": "This is our first Node project",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev:backend": "nodemon server.js"
   },
-  "author": "Scott Morin <scott@journeyedu.co>",
-  "license": "MIT",
+
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
