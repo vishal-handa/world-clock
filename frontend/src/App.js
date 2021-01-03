@@ -19,6 +19,12 @@ const App=() => {
       setCountryID(selectedCountry.alpha2.toUpperCase());
     }
   };
+
+  const getZoneByClick=(event)=>{
+    let zone=event.target.value;
+    console.log(zone);
+    setSelectedTZ(zone);
+  };
   useEffect(()=>{
     fetch(`/timezone/${countryID}`)
     .then(res=>res.json())
@@ -50,8 +56,8 @@ const App=() => {
   },[selectedTZ]);
   
   return (
-    <div>
-      <select onChange={getCountryByClick}>
+    <Wrapper>
+      <Select1 onChange={getCountryByClick}>
       <option value="Select a country">Select a country</option>
         {countries.map(el=>{
           return <option value={el.alpha2}
@@ -59,24 +65,38 @@ const App=() => {
                   id={el.alpha2}
                   >{el.name}</option>
         })}
-      </select>
-      {bool && <select onChange={(ev)=>{
-                  let zone=ev.target.value;
-                  console.log(zone);
-                  setSelectedTZ(zone);
-                }} 
-              >
+      </Select1>
+      {bool && <Select2 onChange={getZoneByClick}>
           <option disabled selected value>Select country specific timezone</option>
           {timezoneByCountry.map(el=>{
             return <option value={el}
                             id={el}
                     >{el}</option>
           })}
-        </select>}
+        </Select2>}
 
         {timeBool && <p>{selectedTime}</p>}
-    </div>
+    </Wrapper>
   );
 };
 
 export default App;
+
+const Wrapper=styled.div`
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  height:100vh;
+`;
+
+const Select1=styled.select`
+  width:400px;
+  margin:10px;
+`;
+
+const Select2=styled.select`
+  width:300px;
+  margin:10px;
+`;
