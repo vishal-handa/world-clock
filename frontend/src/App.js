@@ -4,8 +4,6 @@ import countries from './countries'
 
 
 const App=() => {
-
-  const [country, setCountry]=useState('');
   const [countryID, setCountryID]=useState('');
   const [timezoneByCountry, setTimezoneByCountry]=useState([]);
   const [selectedTZ, setSelectedTZ]=useState('');
@@ -13,11 +11,12 @@ const App=() => {
 
   const getCountryByClick=(event)=>{
     const theID=event.target.value;
-    console.log(theID);
-    let selectedCountry= countries.find(el=>theID===el.alpha2)
-    setCountry(selectedCountry.name);
-    setCountryID(selectedCountry.alpha2.toUpperCase());
-  }
+    if(theID!=="Select a country"){
+      console.log(theID);
+      let selectedCountry= countries.find(el=>theID===el.alpha2)
+      setCountryID(selectedCountry.alpha2.toUpperCase());
+    }
+  };
   useEffect(()=>{
     fetch(`/timezone/${countryID}`)
     .then(res=>res.json())
@@ -32,38 +31,42 @@ const App=() => {
   }
 
   useEffect(()=>{
-    fetch(`/timezone/zone?region=${selectedTZ}`)
+    fetch('/timezone/zone', {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'zone': selectedTZ})
+    })
     .then(res=>res.json())
     .then(res=>console.log(res))
   },[selectedTZ]);
   
   return (
-    <div className="App">
-      <header className="App-header">
-        <select onChange={getCountryByClick}>
-          <option>Select a Country</option>
-          {countries.map(el=>{
-            return <option value={el.alpha2}
-                    key={el.name} 
-                    id={el.alpha2}
-                    >{el.name}</option>
+    <div>
+      <select onChange={getCountryByClick}>
+      <option value="Select a country">Select a country</option>
+        {countries.map(el=>{
+          return <option value={el.alpha2}
+                  key={el.name} 
+                  id={el.alpha2}
+                  >{el.name}</option>
+        })}
+      </select>
+      {bool && <select onChange={(ev)=>{
+                  let zone=ev.target.value;
+                  console.log(zone);
+                  setSelectedTZ(zone);
+                }} 
+              >
+          <option disabled selected value>Select country specific timezone</option>
+          {timezoneByCountry.map(el=>{
+            return <option value={el}
+                            id={el}
+                    >{el}</option>
           })}
-        </select>
-        {bool && <select onChange={(ev)=>{
-          let zone=ev.target.value;
-          console.log(zone);
-          setSelectedTZ(zone);
-        }} 
-        >
-            <option>Select country specific timezone</option>
-            {timezoneByCountry.map(el=>{
-              return <option value={el}
-                        id={el}
-              >{el}</option>
-            })}
-          </select>}
-        
-      </header>
+        </select>}
     </div>
   );
 };

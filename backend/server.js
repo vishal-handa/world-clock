@@ -24,8 +24,8 @@ express()
     let countryDetails=ct.getCountry(countrybyid.toUpperCase())
     res.json({status:200, data:countryDetails})
   })
-  .get('/timezone/zone',(req,res)=>{
-    let zone=req.query;
+  .post('/timezone/zone',(req,res)=>{
+    let zone=req.body.zone;
     console.log(zone);
     res.json({status:200, message:zone});
   })
