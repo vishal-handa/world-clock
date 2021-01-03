@@ -7,8 +7,9 @@ const App=() => {
   const [countryID, setCountryID]=useState('');
   const [timezoneByCountry, setTimezoneByCountry]=useState([]);
   const [selectedTZ, setSelectedTZ]=useState('');
-  const []
+  const [selectedTime, setSelectedTime]=useState('');
   let bool=false;
+  let timeBool=false;
 
   const getCountryByClick=(event)=>{
     const theID=event.target.value;
@@ -30,7 +31,11 @@ const App=() => {
   if(timezoneByCountry.length>=1){
     bool=true;
   }
-  
+
+  if(selectedTime.length!==0){
+    timeBool=true;
+  }
+
   useEffect(()=>{
     fetch('/timezone/zone', {
       method:'POST',
@@ -41,7 +46,7 @@ const App=() => {
       body: JSON.stringify({'zone': selectedTZ})
     })
     .then(res=>res.json())
-    .then(res=>console.log(res))
+    .then(res=>setSelectedTime(res.message));
   },[selectedTZ]);
   
   return (
@@ -68,6 +73,8 @@ const App=() => {
                     >{el}</option>
           })}
         </select>}
+
+        {timeBool && <p>{selectedTime}</p>}
     </div>
   );
 };
