@@ -5,6 +5,7 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
 const ct = require('countries-and-timezones');
+const moment = require('moment-timezone');
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
@@ -26,8 +27,9 @@ express()
   })
   .post('/timezone/zone',(req,res)=>{
     let zone=req.body.zone;
-    console.log(zone);
-    res.json({status:200, message:zone});
+    let zoneDets=moment().tz(zone).format('LLLL');
+    console.log(zoneDets);
+    res.json({status:200, message:zoneDets});
   })
 
   // add new endpoints here ☝️

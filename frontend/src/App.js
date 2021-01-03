@@ -7,6 +7,7 @@ const App=() => {
   const [countryID, setCountryID]=useState('');
   const [timezoneByCountry, setTimezoneByCountry]=useState([]);
   const [selectedTZ, setSelectedTZ]=useState('');
+  const []
   let bool=false;
 
   const getCountryByClick=(event)=>{
@@ -29,7 +30,7 @@ const App=() => {
   if(timezoneByCountry.length>=1){
     bool=true;
   }
-
+  
   useEffect(()=>{
     fetch('/timezone/zone', {
       method:'POST',
