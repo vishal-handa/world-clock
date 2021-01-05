@@ -22,8 +22,10 @@ const App=() => {
 
   const getZoneByClick=(event)=>{
     let zone=event.target.value;
-    console.log(zone);
-    setSelectedTZ(zone);
+    if(zone!=="Select country specific timezone"){
+      console.log(zone);
+      setSelectedTZ(zone);
+    }
   };
   useEffect(()=>{
     fetch(`/timezone/${countryID}`)
@@ -67,7 +69,7 @@ const App=() => {
         })}
       </Select1>
       {bool && <Select2 onChange={getZoneByClick}>
-          <option disabled selected value>Select country specific timezone</option>
+          <option>Select country specific timezone</option>
           {timezoneByCountry.map(el=>{
             return <option value={el}
                             id={el}
