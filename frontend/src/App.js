@@ -20,6 +20,10 @@ const App=() => {
     }
   };
 
+  useEffect(()=>{
+    document.title="World Clock";
+  },[])
+
   const getZoneByClick=(event)=>{
     let zone=event.target.value;
     if(zone!=="Select country specific timezone"){
