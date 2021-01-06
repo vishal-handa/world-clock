@@ -6,7 +6,7 @@ The application uses two packages
 - countries-and-timezones
 - moment.js
 
-Countries-and-Timezones is installed using ```npm install --save countries-and-timezones```. This package gives us the list of all the countries in the world, and their corresponding timezones by using the country specific alpha2 code. Since some countries have more than one timezone, it returns and array of timezones if a country having multiple timezones is selected.
+Countries-and-Timezones is installed using ```npm install --save countries-and-timezones```. This package gives us the list of all the countries in the world, and their corresponding timezones by using the country specific alpha2 code. Since some countries have more than one timezone, it returns an array of timezones in a given country.
 
 Moment.js provides us with the current date and time of the selected timezone. It can be installed using ```npm install moment-timezone```.
 
